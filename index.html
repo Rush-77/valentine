@@ -13,31 +13,71 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Playfair Display', serif;
-    background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
     overflow: hidden;
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
+}
+
+/* Background Image */
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('couple.jpg') no-repeat center center/cover;
+    filter: blur(8px) brightness(0.6);
+    z-index: -2;
+}
+
+/* Dark overlay */
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    z-index: -1;
 }
 
 .container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
     width: 90%;
     max-width: 500px;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.15);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0,0,0,0.4);
 }
 
 h1 {
-    font-size: 30px;
-    text-shadow: 2px 2px 10px #ff4d6d;
+    font-size: 28px;
     margin-bottom: 20px;
 }
 
 #dialogue {
     font-size: 18px;
     min-height: 120px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+}
+
+/* Ring Animation */
+.ring {
+    font-size: 60px;
+    position: absolute;
+    top: -100px;
+    animation: dropRing 2s ease forwards;
+}
+
+@keyframes dropRing {
+    0% { top: -100px; transform: rotate(0deg); }
+    70% { top: 40%; transform: rotate(360deg); }
+    100% { top: 35%; transform: rotate(360deg); }
 }
 
 button {
@@ -53,17 +93,19 @@ button {
 #yesBtn {
     background-color: #ff4d6d;
     color: white;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.07); }
+    100% { transform: scale(1); }
 }
 
 #noBtn {
     background-color: #333;
     color: white;
     position: absolute;
-}
-
-#countdown {
-    margin-bottom: 15px;
-    font-size: 16px;
 }
 
 .balloon {
@@ -83,12 +125,17 @@ button {
 
 <body>
 
+<div class="background"></div>
+<div class="overlay"></div>
+
 <div class="container">
-    <h1>Hey Ashuu 💕</h1>
-    <div id="dialogue"></div>
-    <div id="countdown"></div>
-    <button id="yesBtn">Yes 💘</button>
-    <button id="noBtn">No 😢</button>
+    <div class="card">
+        <div class="ring">💍</div>
+        <h1>Hey Ashuu 💕</h1>
+        <div id="dialogue"></div>
+        <button id="yesBtn">Yes 💘</button>
+        <button id="noBtn">No 😢</button>
+    </div>
 </div>
 
 <audio id="music" loop>
@@ -98,35 +145,19 @@ button {
 <script>
 
 // TYPEWRITER
-const dialogues = [
-`Tum meri life ka woh adventure ho jo main kabhi khatam nahi hone dena chahta…
-let’s start our own love story.
-So… will you be my Valentine?✨💕`
-];
+const text = `Tum meri life ka woh adventure ho jo main kabhi khatam nahi hone dena chahta…
+Let’s start our own love story.
+So… will you be my Valentine?✨💕`;
 
-let index = 0;
-let charIndex = 0;
-const dialogueBox = document.getElementById("dialogue");
-
+let i = 0;
 function typeWriter() {
-    if (charIndex < dialogues[index].length) {
-        dialogueBox.innerHTML += dialogues[index].charAt(charIndex);
-        charIndex++;
+    if (i < text.length) {
+        document.getElementById("dialogue").innerHTML += text.charAt(i);
+        i++;
         setTimeout(typeWriter, 35);
     }
 }
-typeWriter();
-
-// COUNTDOWN
-const targetDate = new Date("Feb 14, 2026 00:00:00").getTime();
-const countdown = document.getElementById("countdown");
-
-setInterval(function() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    countdown.innerHTML = "Countdown to our Valentine: " + days + " days 💞";
-}, 1000);
+setTimeout(typeWriter, 2000); // start after ring drops
 
 // NO BUTTON
 const noTexts = [
@@ -144,10 +175,7 @@ function runAway() {
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
 
-    if (noIndex < noTexts.length - 1) {
-        noIndex++;
-    }
-
+    if (noIndex < noTexts.length - 1) noIndex++;
     noBtn.innerText = noTexts[noIndex];
 
     yesSize += 6;
@@ -162,25 +190,23 @@ function runAway() {
 
 // YES CELEBRATION
 function sayYes() {
-
     document.body.innerHTML = `
     <div style="
         display:flex;
         justify-content:center;
         align-items:center;
         height:100vh;
-        background: linear-gradient(to bottom right, #ff4d6d, #ff99ac);
-        color:white;
-        font-size:34px;
-        text-align:center;
         flex-direction:column;
         font-family:'Playfair Display', serif;
+        background:url('couple.jpg') center/cover no-repeat;
+        color:white;
+        font-size:36px;
+        text-align:center;
     ">
         Yay Ashuuuu 💖😍<br>
         You just made me the happiest person alive! ✨
     </div>
     `;
-
     startConfettiLoop();
     startBalloons();
 }
