@@ -5,42 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Ashuu 💖</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
 <style>
+
 body {
     margin: 0;
     padding: 0;
-    text-align: center;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Playfair Display', serif;
     background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
     overflow: hidden;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
 }
 
 .container {
-    margin-top: 80px;
-    padding: 20px;
+    width: 90%;
+    max-width: 500px;
 }
 
 h1 {
-    font-size: 28px;
+    font-size: 30px;
     text-shadow: 2px 2px 10px #ff4d6d;
+    margin-bottom: 20px;
 }
 
 #dialogue {
-    margin-top: 30px;
     font-size: 18px;
     min-height: 120px;
-    padding: 10px;
+    margin-bottom: 20px;
 }
 
 button {
-    padding: 14px 28px;
+    padding: 12px 26px;
     font-size: 18px;
-    margin: 15px;
+    margin: 10px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 #yesBtn {
@@ -55,11 +62,10 @@ button {
 }
 
 #countdown {
-    margin-top: 10px;
+    margin-bottom: 15px;
     font-size: 16px;
 }
 
-/* Balloon animation */
 .balloon {
     position: fixed;
     bottom: -60px;
@@ -68,15 +74,10 @@ button {
 }
 
 @keyframes floatUp {
-    0% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-110vh);
-        opacity: 0;
-    }
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-110vh); opacity: 0; }
 }
+
 </style>
 </head>
 
@@ -96,28 +97,11 @@ button {
 
 <script>
 
-// ================= TYPEWRITER =================
-
+// TYPEWRITER
 const dialogues = [
 `Tum meri life ka woh adventure ho jo main kabhi khatam nahi hone dena chahta…
 let’s start our own love story.
-So… will you be my Valentine?✨💕`,
-
-`Pyaar dosti hai… aur tum meri sabse pyaari dost ho.
-dosti se thoda zyada ho jaaye?
-Will you be my Valentine?`,
-
-`Agar kisi cheez ko dil se chaho… toh poori kaynaat use tumse milane ki koshish mein lag jaati hai.
-Aur meri kaynaat sirf tum ho.
-Iss Valentine… will u be mine forever? ✨❤️`,
-
-`Main perfect nahi hoon… par tumhare liye sincere hoon.
-Aur iss Valentine pe, bas ek sach bolna hai —
-I really, really like you.
-Will you be my Valentine? 💗🥺`,
-
-`Ishq mein do cheezein zaroori hoti hain — junoon aur tum.
-Junoon mere paas hai… tum banogi meri Valentine?🔥🌹`
+So… will you be my Valentine?✨💕`
 ];
 
 let index = 0;
@@ -128,23 +112,12 @@ function typeWriter() {
     if (charIndex < dialogues[index].length) {
         dialogueBox.innerHTML += dialogues[index].charAt(charIndex);
         charIndex++;
-        setTimeout(typeWriter, 40);
-    } else {
-        setTimeout(nextDialogue, 3000);
+        setTimeout(typeWriter, 35);
     }
 }
-
-function nextDialogue() {
-    index = (index + 1) % dialogues.length;
-    dialogueBox.innerHTML = "";
-    charIndex = 0;
-    typeWriter();
-}
-
 typeWriter();
 
-// ================= COUNTDOWN =================
-
+// COUNTDOWN
 const targetDate = new Date("Feb 14, 2026 00:00:00").getTime();
 const countdown = document.getElementById("countdown");
 
@@ -155,8 +128,7 @@ setInterval(function() {
     countdown.innerHTML = "Countdown to our Valentine: " + days + " days 💞";
 }, 1000);
 
-// ================= NO BUTTON =================
-
+// NO BUTTON
 const noTexts = [
     "No 😢",
     "Are you sure? 🥺",
@@ -169,7 +141,6 @@ let noIndex = 0;
 let yesSize = 18;
 
 function runAway() {
-
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
 
@@ -181,7 +152,6 @@ function runAway() {
 
     yesSize += 6;
     yesBtn.style.fontSize = yesSize + "px";
-    yesBtn.style.padding = (yesSize) + "px " + (yesSize + 10) + "px";
 
     const x = Math.random() * (window.innerWidth - 120);
     const y = Math.random() * (window.innerHeight - 60);
@@ -190,8 +160,7 @@ function runAway() {
     noBtn.style.top = y + "px";
 }
 
-// ================= YES CELEBRATION =================
-
+// YES CELEBRATION
 function sayYes() {
 
     document.body.innerHTML = `
@@ -202,9 +171,10 @@ function sayYes() {
         height:100vh;
         background: linear-gradient(to bottom right, #ff4d6d, #ff99ac);
         color:white;
-        font-size:32px;
+        font-size:34px;
         text-align:center;
         flex-direction:column;
+        font-family:'Playfair Display', serif;
     ">
         Yay Ashuuuu 💖😍<br>
         You just made me the happiest person alive! ✨
@@ -215,85 +185,71 @@ function sayYes() {
     startBalloons();
 }
 
-// ================= CONFETTI =================
-
+// CONFETTI
 function startConfettiBurst() {
-
-    const colors = ["#ff4d6d", "#ff99ac", "#ffc2d1", "#ffffff", "#ffd166", "#f72585"];
-
+    const colors = ["#ff4d6d","#ffffff","#ffd166","#f72585"];
     for (let i = 0; i < 200; i++) {
-
         const confetti = document.createElement("div");
-
         confetti.style.position = "fixed";
         confetti.style.width = "8px";
         confetti.style.height = "14px";
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.top = window.innerHeight / 2 + "px";
-        confetti.style.left = window.innerWidth / 2 + "px";
-
+        confetti.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+        confetti.style.top = window.innerHeight/2 + "px";
+        confetti.style.left = window.innerWidth/2 + "px";
         document.body.appendChild(confetti);
 
-        const angle = Math.random() * 2 * Math.PI;
-        const velocity = Math.random() * 12 + 6;
+        const angle = Math.random()*2*Math.PI;
+        const velocity = Math.random()*12 + 6;
 
-        let x = window.innerWidth / 2;
-        let y = window.innerHeight / 2;
+        let x = window.innerWidth/2;
+        let y = window.innerHeight/2;
 
-        const dx = Math.cos(angle) * velocity;
-        const dy = Math.sin(angle) * velocity;
+        const dx = Math.cos(angle)*velocity;
+        const dy = Math.sin(angle)*velocity;
 
-        let gravity = 0.4;
-
-        const interval = setInterval(() => {
+        const interval = setInterval(()=>{
             x += dx;
-            y += dy + gravity;
+            y += dy + 0.4;
             confetti.style.left = x + "px";
             confetti.style.top = y + "px";
-
             if (y > window.innerHeight) {
                 clearInterval(interval);
                 confetti.remove();
             }
-
-        }, 20);
+        },20);
     }
 }
 
-function startConfettiLoop() {
+function startConfettiLoop(){
     let count = 0;
-    const interval = setInterval(() => {
+    const interval = setInterval(()=>{
         startConfettiBurst();
         count++;
-        if (count >= 60) clearInterval(interval);
-    }, 2000);
+        if(count >= 60) clearInterval(interval);
+    },2000);
 }
 
-// ================= BALLOONS =================
-
-function startBalloons() {
-    setInterval(() => {
+// BALLOONS
+function startBalloons(){
+    setInterval(()=>{
         const balloon = document.createElement("div");
-        balloon.className = "balloon";
-        balloon.innerHTML = "💖";
-        balloon.style.left = Math.random() * 100 + "vw";
-        balloon.style.fontSize = (Math.random() * 20 + 30) + "px";
+        balloon.className="balloon";
+        balloon.innerHTML="💖";
+        balloon.style.left=Math.random()*100+"vw";
+        balloon.style.fontSize=(Math.random()*20+30)+"px";
         document.body.appendChild(balloon);
-
-        setTimeout(() => balloon.remove(), 6000);
-
-    }, 400);
+        setTimeout(()=>balloon.remove(),6000);
+    },400);
 }
 
-// ================= EVENTS =================
-
+// EVENTS
 document.getElementById("yesBtn").addEventListener("click", sayYes);
 document.getElementById("noBtn").addEventListener("click", runAway);
 
-document.body.addEventListener("click", function() {
-    const music = document.getElementById("music");
-    if (music) music.play();
-}, { once: true });
+document.body.addEventListener("click", function(){
+    const music=document.getElementById("music");
+    if(music) music.play();
+},{once:true});
 
 </script>
 
