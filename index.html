@@ -192,41 +192,60 @@ function runAway() {
 function sayYes() {
 
     const music = document.getElementById("music");
+
     if (music) {
+        music.volume = 0.8;
         music.currentTime = 0;
-        music.play();
+        music.play().catch(error => {
+            console.log("Autoplay prevented:", error);
+        });
     }
 
-    document.body.innerHTML = `
-    <div style="position:fixed;width:100%;height:100%;overflow:hidden;">
+    // Instead of replacing entire body,
+    // just replace container content
+    const container = document.querySelector(".container");
 
+    container.innerHTML = `
         <div style="
-            position:absolute;
+            position:fixed;
             width:100%;
             height:100%;
-            background:url('couple.PNG') center center / cover no-repeat;
-            filter: blur(8px) brightness(0.7);
-        "></div>
-
-        <div style="
-            position:relative;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100%;
-            flex-direction:column;
-            font-family:'Playfair Display', serif;
-            color:#ffffff;
-            text-align:center;
+            top:0;
+            left:0;
+            overflow:hidden;
         ">
-            <div style="font-family:'Great Vibes', cursive; font-size:60px; margin-bottom:15px;">
-                Yay Ashuuuu 💖
-            </div>
-            <div style="font-size:22px;">
-                You just made me the happiest person alive ✨
+
+            <div style="
+                position:absolute;
+                width:100%;
+                height:100%;
+                background:url('couple.PNG') center center / cover no-repeat;
+                filter: blur(8px) brightness(0.7);
+            "></div>
+
+            <div style="
+                position:relative;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                height:100%;
+                flex-direction:column;
+                font-family:'Playfair Display', serif;
+                color:#ffffff;
+                text-align:center;
+            ">
+                <div style="
+                    font-family:'Great Vibes', cursive;
+                    font-size:60px;
+                    margin-bottom:15px;
+                ">
+                    Yay Ashuuuu 💖
+                </div>
+                <div style="font-size:22px;">
+                    You just made me the happiest person alive ✨
+                </div>
             </div>
         </div>
-    </div>
     `;
 
     startConfettiLoop();
@@ -281,7 +300,7 @@ function startBalloons(){
     setInterval(()=>{
         const balloon=document.createElement("div");
         balloon.className="balloon";
-        balloon.innerHTML="💖";
+        balloon.innerHTML="🩷";
         balloon.style.left=Math.random()*100+"vw";
         balloon.style.fontSize=(Math.random()*20+30)+"px";
         document.body.appendChild(balloon);
