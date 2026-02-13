@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Ashuu 💖</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
+    overflow: hidden;
+    color: white;
+}
+
+.container {
+    margin-top: 80px;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 28px;
+    text-shadow: 2px 2px 10px #ff4d6d;
+}
+
+#dialogue {
+    margin-top: 30px;
+    font-size: 18px;
+    min-height: 120px;
+    padding: 10px;
+}
+
+button {
+    padding: 14px 28px;
+    font-size: 18px;
+    margin: 15px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#yesBtn {
+    background-color: #ff4d6d;
+    color: white;
+}
+
+#noBtn {
+    background-color: #333;
+    color: white;
+    position: absolute;
+}
+
+#countdown {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+/* Balloon animation */
+.balloon {
+    position: fixed;
+    bottom: -60px;
+    font-size: 30px;
+    animation: floatUp 6s linear forwards;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Hey Ashuu 💕</h1>
+    <div id="dialogue"></div>
+    <div id="countdown"></div>
+    <button id="yesBtn">Yes 💘</button>
+    <button id="noBtn">No 😢</button>
+</div>
+
+<audio id="music" loop>
+    <source src="romantic.mp3" type="audio/mp3">
+</audio>
+
+<script>
+
+// ================= TYPEWRITER =================
+
+const dialogues = [
+`Tum meri life ka woh adventure ho jo main kabhi khatam nahi hone dena chahta…
+let’s start our own love story.
+So… will you be my Valentine?✨💕`,
+
+`Pyaar dosti hai… aur tum meri sabse pyaari dost ho.
+dosti se thoda zyada ho jaaye?
+Will you be my Valentine?`,
+
+`Agar kisi cheez ko dil se chaho… toh poori kaynaat use tumse milane ki koshish mein lag jaati hai.
+Aur meri kaynaat sirf tum ho.
+Iss Valentine… will u be mine forever? ✨❤️`,
+
+`Main perfect nahi hoon… par tumhare liye sincere hoon.
+Aur iss Valentine pe, bas ek sach bolna hai —
+I really, really like you.
+Will you be my Valentine? 💗🥺`,
+
+`Ishq mein do cheezein zaroori hoti hain — junoon aur tum.
+Junoon mere paas hai… tum banogi meri Valentine?🔥🌹`
+];
+
+let index = 0;
+let charIndex = 0;
+const dialogueBox = document.getElementById("dialogue");
+
+function typeWriter() {
+    if (charIndex < dialogues[index].length) {
+        dialogueBox.innerHTML += dialogues[index].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter, 40);
+    } else {
+        setTimeout(nextDialogue, 3000);
+    }
+}
+
+function nextDialogue() {
+    index = (index + 1) % dialogues.length;
+    dialogueBox.innerHTML = "";
+    charIndex = 0;
+    typeWriter();
+}
+
+typeWriter();
+
+// ================= COUNTDOWN =================
+
+const targetDate = new Date("Feb 14, 2026 00:00:00").getTime();
+const countdown = document.getElementById("countdown");
+
+setInterval(function() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    countdown.innerHTML = "Countdown to our Valentine: " + days + " days 💞";
+}, 1000);
+
+// ================= NO BUTTON =================
+
+const noTexts = [
+    "No 😢",
+    "Are you sure? 🥺",
+    "Really sure? 😢",
+    "Just think about it 💭",
+    "I will be very sad 💔"
+];
+
+let noIndex = 0;
+let yesSize = 18;
+
+function runAway() {
+
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+
+    if (noIndex < noTexts.length - 1) {
+        noIndex++;
+    }
+
+    noBtn.innerText = noTexts[noIndex];
+
+    yesSize += 6;
+    yesBtn.style.fontSize = yesSize + "px";
+    yesBtn.style.padding = (yesSize) + "px " + (yesSize + 10) + "px";
+
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+// ================= YES CELEBRATION =================
+
+function sayYes() {
+
+    document.body.innerHTML = `
+    <div style="
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        background: linear-gradient(to bottom right, #ff4d6d, #ff99ac);
+        color:white;
+        font-size:32px;
+        text-align:center;
+        flex-direction:column;
+    ">
+        Yay Ashuuuu 💖😍<br>
+        You just made me the happiest person alive! ✨
+    </div>
+    `;
+
+    startConfettiLoop();
+    startBalloons();
+}
+
+// ================= CONFETTI =================
+
+function startConfettiBurst() {
+
+    const colors = ["#ff4d6d", "#ff99ac", "#ffc2d1", "#ffffff", "#ffd166", "#f72585"];
+
+    for (let i = 0; i < 200; i++) {
+
+        const confetti = document.createElement("div");
+
+        confetti.style.position = "fixed";
+        confetti.style.width = "8px";
+        confetti.style.height = "14px";
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.top = window.innerHeight / 2 + "px";
+        confetti.style.left = window.innerWidth / 2 + "px";
+
+        document.body.appendChild(confetti);
+
+        const angle = Math.random() * 2 * Math.PI;
+        const velocity = Math.random() * 12 + 6;
+
+        let x = window.innerWidth / 2;
+        let y = window.innerHeight / 2;
+
+        const dx = Math.cos(angle) * velocity;
+        const dy = Math.sin(angle) * velocity;
+
+        let gravity = 0.4;
+
+        const interval = setInterval(() => {
+            x += dx;
+            y += dy + gravity;
+            confetti.style.left = x + "px";
+            confetti.style.top = y + "px";
+
+            if (y > window.innerHeight) {
+                clearInterval(interval);
+                confetti.remove();
+            }
+
+        }, 20);
+    }
+}
+
+function startConfettiLoop() {
+    let count = 0;
+    const interval = setInterval(() => {
+        startConfettiBurst();
+        count++;
+        if (count >= 60) clearInterval(interval);
+    }, 2000);
+}
+
+// ================= BALLOONS =================
+
+function startBalloons() {
+    setInterval(() => {
+        const balloon = document.createElement("div");
+        balloon.className = "balloon";
+        balloon.innerHTML = "💖";
+        balloon.style.left = Math.random() * 100 + "vw";
+        balloon.style.fontSize = (Math.random() * 20 + 30) + "px";
+        document.body.appendChild(balloon);
+
+        setTimeout(() => balloon.remove(), 6000);
+
+    }, 400);
+}
+
+// ================= EVENTS =================
+
+document.getElementById("yesBtn").addEventListener("click", sayYes);
+document.getElementById("noBtn").addEventListener("click", runAway);
+
+document.body.addEventListener("click", function() {
+    const music = document.getElementById("music");
+    if (music) music.play();
+}, { once: true });
+
+</script>
+
+</body>
+</html>
